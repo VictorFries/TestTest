@@ -47,7 +47,7 @@ void loop() {
   pullPinkie=constrain(pullPinkie,0,180);
   
   int r[]={pullIndex,pullMiddle,pullRing,pullPinkie};
-  transmit.write(r,sizeof(r));
+  transmit.write(&r,sizeof(r));
   
   }
 
