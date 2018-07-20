@@ -7,24 +7,29 @@ Servo index;
 Servo middle;
 Servo ring;
 Servo pinkie;
-SoftwareSerial phone(10,11);
-RF24 receive(A0,A1);
+SoftwareSerial phone(2,9);
+RF24 receive(3,4);
 int currentState=0;
 int lastState=0;
+byte address[]=("Node1");
 
 void setup() {
-index.attach(9);  
-middle.attach(6);
-ring.attach(5);
-pinkie.attach(3);
+Serial.begin(9600);
+receive.begin();
+receive.openReadingPipe(0,address);
+receive.startListening();
+Serial.println("Listening");
 pinMode(8,INPUT);
- byte address[][6]={"Node1"};
- receive.openReadingPipe(1,address[0]);
- receive.startListening();
+index.attach(10);  
+middle.attach(7);
+ring.attach(6);
+pinkie.attach(5);
+ 
+
 }
-int arr[]={};
+int arr[4]={};
 char in;
-int x=1;
+int x=0;
 void loop() {
   lastState=0;
   currentState=digitalRead(8);
@@ -32,80 +37,76 @@ void loop() {
   {
   x=x+1;
   }
+  Serial.println(x);
   delay(100);
   if(x%2==0)
   {
-  if(receive.available())
-  {
-    while(receive.available())
+    if(receive.available())
     {
-      receive.read(&arr,sizeof(arr));
-    }
+    Serial.println("Data Recieved");
+    
+    receive.read(&arr,sizeof(arr));
+    int a=arr[0];
+    int b=arr[1];
+    int c=arr[2];
+    int d=arr[3];
+    /*Serial.println(a);
+    Serial.println(b);
+    Serial.println(c);
+    Serial.println(d);*/
+    index.write(b);
+  middle.write(c);
+  ring.write(a);
+  pinkie.write(d);
   }
-  index.write(arr[0]);
-  middle.write(arr[1]);
-  ring.write(arr[2]);
-  pinkie.write(arr[3]);
+  else if(!receive.available())
+  {
+    Serial.println("Failed");
+  }
+  
   }
   if(x%2==1)
   {
+    Serial.println("Bluetooth");
     if(phone.available())
   {
    in=phone.read();
-   //Serial.println(in);
+   Serial.println(in);
    if(in=='1')
    {
-    index.write(90);
+    index.write(45);
     
    }
    else if(in=='2')
    {
-    index.write(180);
+    index.write(90);
    }
    else if(in=='3')
    {
-    middle.write(90);
+    middle.write(45);
    }
    else if(in=='4')
    {
-    middle.write(180);
+    middle.write(90);
    }
    else if(in=='5')
    {
-    ring.write(90);
+    ring.write(45);
    }
    else if(in=='6')
    {
-    ring.write(180);
+    ring.write(90);
    }
    else if(in=='7')
    {
-    phone.println(90);
+    phone.println(45);
    }
    else if(in=='8')
    {
-    pinkie.write(180);
+    pinkie.write(90);
+   }
    }
   }
-  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 }
+
