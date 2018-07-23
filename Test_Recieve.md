@@ -7,7 +7,9 @@ Servo index;
 Servo middle;
 Servo ring;
 Servo pinkie;
-SoftwareSerial phone(2,9);
+int i=A0;
+int out=A1;
+SoftwareSerial phone(i,out);
 RF24 receive(3,4);
 int currentState=0;
 int lastState=0;
@@ -15,16 +17,20 @@ byte address[]=("Node1");
 
 void setup() {
 Serial.begin(9600);
+phone.begin(9600);
 receive.begin();
 receive.openReadingPipe(0,address);
 receive.startListening();
 Serial.println("Listening");
 pinMode(8,INPUT);
+pinMode(i,INPUT);
+pinMode(out,OUTPUT);
 index.attach(10);  
 middle.attach(7);
 ring.attach(6);
 pinkie.attach(5);
- 
+
+
 
 }
 int arr[4]={};
@@ -75,7 +81,7 @@ void loop() {
    if(in=='1')
    {
     index.write(45);
-    
+    phone.println("Works");
    }
    else if(in=='2')
    {
@@ -109,4 +115,6 @@ void loop() {
   }
 
 }
+
+
 
