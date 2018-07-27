@@ -37,14 +37,20 @@ void loop() {
   flexPinkie=analogRead(flexPinkiepin);
   
   pullIndex=map(flexIndex,200,300,0,90);
+  
   pullIndex=constrain(pullIndex,0,90);
+  
   
   pullMiddle=map(flexMiddle,200,300,0,90);
   pullMiddle=constrain(pullMiddle,0,90);
   
+  
+  
   pullRing=map(flexRing,200,300,0,90);
+  
   pullRing=constrain(pullRing,0,90);
 
+  
   pullPinkie=map(flexPinkie,200,300,0,90);
   pullPinkie=constrain(pullPinkie,0,90);
   
@@ -54,4 +60,5 @@ void loop() {
   transmit.write(&r,sizeof(r));
   
   }
+
 
