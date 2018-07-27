@@ -44,16 +44,16 @@ void loop() {
   flexRing=analogRead(flexRingpin);
   flexPinkie=analogRead(flexPinkiepin);
   
-  pullIndex=map(flexIndex,600,700,0,180);
+  pullIndex=map(flexIndex,200,300,0,180);
   pullIndex=constrain(pullIndex,0,180);
   
-  pullMiddle=map(flexMiddle,600,700,0,180);
+  pullMiddle=map(flexMiddle,200,300,0,180);
   pullMiddle=constrain(pullMiddle,0,180);
   
-  pullRing=map(flexRing,600,700,0,180);
+  pullRing=map(flexRing,200,300,0,180);
   pullRing=constrain(pullRing,0,180);
 
-  pullPinkie=map(flexPinkie,600,700,0,180);
+  pullPinkie=map(flexPinkie,200,300,0,180);
   pullPinkie=constrain(pullPinkie,0,180);
   
   index.write(pullIndex);//turn the servos
