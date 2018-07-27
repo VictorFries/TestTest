@@ -33,6 +33,7 @@ pinkie.attach(5);
 
 
 }
+int rando;
 int arr[4]={};
 char in;
 int x=0;
@@ -80,7 +81,7 @@ void loop() {
    Serial.println(in);
    if(in=='1')
    {
-    index.write(45);
+    index.write(0);
     phone.println("Works");
    }
    else if(in=='2')
@@ -89,7 +90,7 @@ void loop() {
    }
    else if(in=='3')
    {
-    middle.write(45);
+    middle.write(0);
    }
    else if(in=='4')
    {
@@ -105,11 +106,43 @@ void loop() {
    }
    else if(in=='7')
    {
-    phone.println(45);
+    phone.println(0);
    }
    else if(in=='8')
    {
     pinkie.write(90);
+   }
+   else if(in=='9')
+   {
+    Serial.println('9');
+    while(in=='9')
+    {
+      in=phone .read();
+      Serial.println(rando);
+     delay(3000); 
+    rando=random(0,3);
+    if(rando==0)
+    {
+      ring.write(90);
+      pinkie.write(0);
+      middle.write(0);
+      index.write(90);
+    }
+    else if(rando==1)
+    {
+     ring.write(90);
+     index.write(90);
+     pinkie.write(90);
+     middle.write(90); 
+    }
+    else if(rando==2)
+    {
+      ring.write(0);
+     index.write(0);
+     pinkie.write(0);
+     middle.write(0); 
+    }
+    }
    }
    }
   }
